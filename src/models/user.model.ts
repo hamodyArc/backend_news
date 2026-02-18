@@ -7,6 +7,7 @@ export interface UserDocument extends Document {
   email: string;
   role: UserRole;
   password: string;
+  savedNews: mongoose.Schema.Types.ObjectId[];
 }
 
 export const createUserValidation = z.object({
@@ -30,6 +31,13 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+
+  savedNews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "News",
+    },
+  ],
 });
 
 export const UserModel = mongoose.model<UserDocument>("User", userSchema);
